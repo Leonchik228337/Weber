@@ -1,0 +1,10 @@
+{% extends "articles/base.html" %}
+
+{% block content %}
+<h1 style="text-align: center">Зарегистрируйтесь</h1>
+<form method="post">
+    {% csrf_token %}
+    <table>{{ form }}</table>
+    <input type="submit" value="Отправить">
+</form>
+{% endblock content %}
