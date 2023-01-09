@@ -1,11 +1,14 @@
 {% extends "articles/base.html" %}
 
 {% block content %}
-<h1 style="text-align: center">Зарегистрируйтесь</h1>
-<form method="post">
+<h1 style="text-align: center">Ошибка</h1>
+<form method="post" action="{% url 'index' %}">
     {% csrf_token %}
-    <table>{{ form }}</table>
-    <h3>Неправильно введена электронная почта или пароль</h3>
-    <input type="submit" value="Отправить">
+    <p><b>Имя пользователя</b></p>
+    <table>{{ form.username }}</table>
+    <p><b>Пароль</b></p>
+    <table>{{ form.password }}</table>
+    <h3>Неправильно введено имя пользователя или пароль</h3>
+    <input type="submit" value="Войти">
 </form>
 {% endblock content %}

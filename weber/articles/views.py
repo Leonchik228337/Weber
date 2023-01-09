@@ -5,38 +5,38 @@ from .forms import Registration
 
 def index(request):
 	if request.method == "POST":
-		reg_form = Registration(request.POST)
-		if reg_form.is_valid():
-			email = reg_form.cleaned_data["email"]
-			password = reg_form.cleaned_data["password"]
+		login_form = Registration(request.POST)
+		if login_form.is_valid():
+			username = login_form.cleaned_data["username"]
+			password = login_form.cleaned_data["password"]
 			context = {
-				"email": email,
+				"username": username,
 				"password": password,
 				}
 			return render(request, "index.html", context)
 		else:
-			reg_form.email.initial = reg_form.cleaned_data["email"]
-			reg_form.password.initial = reg_form.cleaned_data["password"]
-			return render(request, "reg_error.html")
+			return render(request, "reg_error.html", context={"form": login_form})
 	else:
-		reg_form = Registration()
+		login_form = Registration()
 
 		context = {
 			"title": "Index",
-			"form": reg_form,
+			"form": login_form,
 			}
 		return render(request, "login.html", context)
 
 
 def articles(request):
-	context = {
-		"title": "Все статьи",
-		}
+	context = {"title": "Все статьи"}
 	return render(request, "articles/index.html", context)
 
 
 def about(request):
-	context = {
-		"title": "about",
-		}
+	context = {"title": "about"}
 	return render(request, "articles/about.html", context)
+
+
+def registration(request):
+	reg_form = Registration()
+	context = {"title": "Регистрация", "form": reg_form}
+	return render(request, "registration.html", context)
