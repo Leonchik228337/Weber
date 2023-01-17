@@ -1,23 +1,24 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from .forms import Registration
+from .forms import Login
+from django.contrib.auth.models import User
 
 
 def index(request):
 	if request.method == "POST":
-		login_form = Registration(request.POST)
+		login_form = Login(request.POST)
 		if login_form.is_valid():
+			context = {"is_register": False}
 			username = login_form.cleaned_data["username"]
 			password = login_form.cleaned_data["password"]
-			context = {
-				"username": username,
-				"password": password,
-				}
+			user = User.objects.create_user(username=username, password=password)
+			user.save()
+
 			return render(request, "index.html", context)
 		else:
 			return render(request, "reg_error.html", context={"form": login_form})
 	else:
-		login_form = Registration()
+		login_form = Login()
 
 		context = {
 			"title": "Index",
@@ -37,6 +38,6 @@ def about(request):
 
 
 def registration(request):
-	reg_form = Registration()
+	reg_form = Login()
 	context = {"title": "Регистрация", "form": reg_form}
 	return render(request, "registration.html", context)

@@ -1,27 +1,29 @@
 {% extends "articles/base.html" %}
 
 {% block content %}
-<h1 style="text-align: center">Войдите</h1>
-<form method="post">
-  {% csrf_token %}
-  <p><b>Имя пользователя</b></p>
-  <table>{{ form.username }}</table>
-  {% if form.username.error %}
-  <p>{{ form.username.error</p>
-  {% endif %}
-  <p><b>Пароль</b></p>
-  <table>{{ form.password }}</table>
-  {% if form.password.error %}
-  <p>{{ form.password.error</p>
-  {% endif %}
-  <br>
-  <input type="submit" value="Войти">
-</form>
+  <h1 style="text-align: center">Войдите</h1>
+  <form method="post">
+    {% csrf_token %}
+    <p><b>Имя пользователя</b></p>
+    <table>{{ form.username }}</table>
+    {% if form.username.error %}
+      <p>{{ form.username.error }}</p>
+    {% endif %}
 
-<form action="{% url 'registration' %}">
-  <p>Если вы еще не зарегистрированы, нажимайте кнопку снизу</p>
-  <input type="submit" value="Зарегистрироваться">
-</form>
+    <p><b>Пароль</b></p>
+    <table>{{ form.password }}</table>
 
+    {% if form.password.error %}
+      <p>{{ form.password.error }}</p>
+    {% endif %}
+    <br>
+    <input type="submit" value="Войти">
+  </form>
+
+  <form action="{% url 'registration' %}">
+    {% csrf_token %}
+    <p>Если вы еще не зарегистрированы, нажимайте кнопку снизу</p>
+    <input type="submit" value="Зарегистрироваться">
+  </form>
 
 {% endblock content %}
